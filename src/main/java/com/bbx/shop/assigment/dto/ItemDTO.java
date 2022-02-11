@@ -1,6 +1,7 @@
 package com.bbx.shop.assigment.dto;
 
 import com.bbx.shop.assigment.model.enums.ItemStateEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -12,12 +13,14 @@ public class ItemDTO implements Serializable {
 
     private Long idItem;
     private String itemCode;
-    private String Description;
+    private String description;
     private Double price;
     private ItemStateEnum state;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime creationDate;
     private List<SupplierDTO> supplierDTOList;
     private List<PriceReductionDTO> priceReductionDTOS;
+    private UserDTO creator;
 
     public ItemDTO() {
     }
@@ -26,7 +29,7 @@ public class ItemDTO implements Serializable {
                    LocalDateTime creationDate, List<SupplierDTO> supplierDTOList, List<PriceReductionDTO> priceReductionDTOS) {
         this.idItem = idItem;
         this.itemCode = itemCode;
-        Description = description;
+        this.description = description;
         this.price = price;
         this.state = state;
         this.creationDate = creationDate;
@@ -37,7 +40,7 @@ public class ItemDTO implements Serializable {
     public ItemDTO(String itemCode, String description, Double price, ItemStateEnum state, LocalDateTime creationDate,
                    List<SupplierDTO> supplierDTOList, List<PriceReductionDTO> priceReductionDTOList) {
         this.itemCode = itemCode;
-        Description = description;
+        this.description = description;
         this.price = price;
         this.state = state;
         this.creationDate = creationDate;
@@ -66,11 +69,11 @@ public class ItemDTO implements Serializable {
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public Double getPrice() {
@@ -118,7 +121,7 @@ public class ItemDTO implements Serializable {
         final StringBuffer sb = new StringBuffer("ItemDTO{");
         sb.append("idItem=").append(idItem);
         sb.append(", itemCode='").append(itemCode).append('\'');
-        sb.append(", Description='").append(Description).append('\'');
+        sb.append(", description='").append(description).append('\'');
         sb.append(", price=").append(price);
         sb.append(", state=").append(state);
         sb.append(", creationDate=").append(creationDate);

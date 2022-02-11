@@ -34,7 +34,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return new AntPathMatcher().match("/authenticate", request.getServletPath());
+        return new AntPathMatcher().match("/authenticate", request.getServletPath()) &&
+                new AntPathMatcher().match("/api/**", request.getServletPath());
     }
 
 
@@ -65,12 +66,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             UserDetails userDetails = this.myUserDetailsService.loadUserByUsername(username);
 
             if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =  new UsernamePasswordAuthenticationToken(userDetails, null,
+                        userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                 filterChain.doFilter(request, response);
                 logger.info("terminamos");
+                return;
             }
         }
+        filterChain.doFilter(request, response);
     }
 }

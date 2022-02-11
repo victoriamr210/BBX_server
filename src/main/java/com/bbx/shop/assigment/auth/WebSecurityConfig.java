@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,6 +18,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -60,54 +66,61 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    @Bean
+    CorsConfigurationSource corsConfigurationSource()
+    {
+
+
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
+        //configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Arrays.asList("Authorization","Content-Type"));
+
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
 //        http
-//            .cors().disable()
-//            .csrf().disable()
-//            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//            .authorizeRequests()
-//            .antMatchers("/authenticate").permitAll()
-//            .antMatchers("/api/**").permitAll();
-        http
-                .cors().and()
-                .csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unAuthorizedResponseAuthenticationEntryPoint).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests()
-//                .anyRequest().authenticated();
-                .antMatchers("/authenticate").permitAll()
-                .antMatchers("/api/**").permitAll();
+//                .cors().and()
+//                .csrf().disable()
+//                .exceptionHandling().authenticationEntryPoint(unAuthorizedResponseAuthenticationEntryPoint).and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+//                .authorizeRequests()
+////                .anyRequest().authenticated();
+//                .antMatchers("/authenticate").permitAll()
+//                .antMatchers("/api/**").permitAll();
+////
+//        http
+//                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 //
-        http
-                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+//
+//        http
+//                .headers()
+//                .frameOptions().sameOrigin()  //H2 Console Needs this setting
+//                .cacheControl();
 
-
         http
-                .headers()
-                .frameOptions().sameOrigin()  //H2 Console Needs this setting
-                .cacheControl();
+                .cors().and().csrf() .disable()
+//                .headers().frameOptions().deny()
+//                .and()
+//                .anonymous()
+//                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/authenticate").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .exceptionHandling().authenticationEntryPoint(unAuthorizedResponseAuthenticationEntryPoint)
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
 
-//    @Override
-//    public void configure(final WebSecurity web) {
-//        web
-//                .ignoring()
-//                .antMatchers(
-//                        HttpMethod.POST,
-//                        authenticationPath
-//                )
-//                .antMatchers(HttpMethod.OPTIONS, "/**")
-//                .and()
-//                .ignoring()
-//                .antMatchers(
-//                        HttpMethod.GET,
-//                        "/" //Other Stuff You want to Ignore
-//                )
-//                .and()
-//                .ignoring()
-//                .antMatchers("/h2-console/**/**");
-//
-//    }
 }
