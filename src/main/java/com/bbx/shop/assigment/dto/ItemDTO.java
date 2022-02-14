@@ -26,7 +26,8 @@ public class ItemDTO implements Serializable {
     }
 
     public ItemDTO(Long idItem, String itemCode, String description, Double price, ItemStateEnum state,
-                   LocalDateTime creationDate, List<SupplierDTO> supplierDTOList, List<PriceReductionDTO> priceReductionDTOS) {
+                   LocalDateTime creationDate, List<SupplierDTO> supplierDTOList, List<PriceReductionDTO> priceReductionDTOS,
+                   UserDTO creator) {
         this.idItem = idItem;
         this.itemCode = itemCode;
         this.description = description;
@@ -35,10 +36,11 @@ public class ItemDTO implements Serializable {
         this.creationDate = creationDate;
         this.supplierDTOList = supplierDTOList;
         this.priceReductionDTOS = priceReductionDTOS;
+        this.creator = creator;
     }
 
     public ItemDTO(String itemCode, String description, Double price, ItemStateEnum state, LocalDateTime creationDate,
-                   List<SupplierDTO> supplierDTOList, List<PriceReductionDTO> priceReductionDTOList) {
+                   List<SupplierDTO> supplierDTOList, List<PriceReductionDTO> priceReductionDTOList, UserDTO creator) {
         this.itemCode = itemCode;
         this.description = description;
         this.price = price;
@@ -46,6 +48,7 @@ public class ItemDTO implements Serializable {
         this.creationDate = creationDate;
         this.supplierDTOList = supplierDTOList;
         this.priceReductionDTOS = priceReductionDTOList;
+        this.creator = creator;
     }
 
     public static Long getSerialVersionID() {
@@ -116,6 +119,14 @@ public class ItemDTO implements Serializable {
         this.priceReductionDTOS = priceReductionDTOS;
     }
 
+    public UserDTO getCreator() {
+        return creator;
+    }
+
+    public void setCreator(UserDTO creator) {
+        this.creator = creator;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("ItemDTO{");
@@ -127,6 +138,7 @@ public class ItemDTO implements Serializable {
         sb.append(", creationDate=").append(creationDate);
         sb.append(", supplierDTOList=").append(supplierDTOList);
         sb.append(", priceReductionDTOS=").append(priceReductionDTOS);
+        sb.append(", creator=").append(creator);
         sb.append('}');
         return sb.toString();
     }

@@ -5,6 +5,7 @@ import com.bbx.shop.assigment.model.PriceReduction;
 import com.bbx.shop.assigment.model.Supplier;
 import com.bbx.shop.assigment.model.User;
 import com.bbx.shop.assigment.model.enums.ItemStateEnum;
+import com.bbx.shop.assigment.model.enums.UserRoleEnum;
 import com.bbx.shop.assigment.repository.ItemRepository;
 import com.bbx.shop.assigment.repository.PriceReductionRepository;
 import com.bbx.shop.assigment.repository.SupplierRepository;
@@ -47,10 +48,15 @@ public class DatabaseLoader  implements CommandLineRunner {
 
         priceReductionRepository.save(new PriceReduction(12D, LocalDate.parse("01/02/2022", dateTimeFormatter), LocalDate.parse("20/02/2022", dateTimeFormatter)));
         priceReductionRepository.save(new PriceReduction(3D, LocalDate.parse("12/02/2022", dateTimeFormatter), LocalDate.parse("20/02/2022", dateTimeFormatter)));
+
+        User user = new User("Victoria Manrique", "VMR", "$2a$04$WeHJ5LT.hm2.n.7u8lKaVeRU.jTMMmwkhag0ea0Rbd7iECrfmzNZS", UserRoleEnum.USER);
+        User user1 = new User("BITBOX", "BITBOX","$2a$04$WeHJ5LT.hm2.n.7u8lKaVeRU.jTMMmwkhag0ea0Rbd7iECrfmzNZS", UserRoleEnum.ADMIN);
+        userRepository.save(user1);
+        item.setCreator(user);
+
         item.addSupplier(ikea);
         itemRepository.save(item);
 
         //password == pass
-        userRepository.save(new User("Victoria Manrique", "VMR", "$2a$04$WeHJ5LT.hm2.n.7u8lKaVeRU.jTMMmwkhag0ea0Rbd7iECrfmzNZS"));
     }
 }

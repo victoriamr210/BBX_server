@@ -60,7 +60,7 @@ public class ItemRestController {
         }catch(Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+}
 
 
     @PostMapping("/new")
@@ -84,7 +84,51 @@ public class ItemRestController {
             return ResponseEntity.ok(itemDTO);
 
         }catch(Exception e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getByCode/{itemCode}")
+    ResponseEntity<ItemDTO> getItemByCode(@PathVariable String itemCode){
+        log.info("Get Item by Code: " + itemCode);
+        try{
+            ItemDTO itemDTO = itemService.getItemByCode(itemCode);
+            return ResponseEntity.ok(itemDTO);
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("isCodeAvailable/{itemCode}")
+    ResponseEntity<Boolean> isCodeAvailable(@PathVariable String itemCode){
+        log.info("Check if itemCode" + itemCode + " is available: ");
+        try{
+            Boolean isCodeAvailable = itemService.isCodeAvailable(itemCode);
+            return ResponseEntity.ok(isCodeAvailable);
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/deactivateItem/{idItem}")
+    ResponseEntity<?> deactivateItem(@PathVariable Long idItem, @RequestBody String reasonDeactivation){
+        log.info("Deactivate item: " + idItem);
+        try{
+            ItemDTO itemDTO = itemService.deactivateItem(idItem, reasonDeactivation);
+            return ResponseEntity.ok(itemDTO);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/checkDatePrices")
+    ResponseEntity<Boolean> checkDatePrices(@RequestBody ItemDTO itemDTO){
+        log.info("Check Dates");
+        try{
+            Boolean isPricesOk = itemService.isPricesValid(itemDTO);
+            return ResponseEntity.ok(isPricesOk);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

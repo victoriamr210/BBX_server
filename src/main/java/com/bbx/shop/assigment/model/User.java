@@ -1,5 +1,6 @@
 package com.bbx.shop.assigment.model;
 
+import com.bbx.shop.assigment.model.enums.UserRoleEnum;
 import org.springframework.context.annotation.Role;
 
 import javax.persistence.Entity;
@@ -15,14 +16,16 @@ public class User {
     private String name;
     private String username;
     private String password;
+    private UserRoleEnum role;
 
     public User() {
     }
 
-    public User(String name, String username, String password) {
+    public User(String name, String username, String password, UserRoleEnum role) {
         this.name = name;
         this.username = username;
         this.password = password;
+        this.role = role;
     }
 
     public Long getIdUser() {
@@ -58,6 +61,13 @@ public class User {
         this.password = password;
     }
 
+    public UserRoleEnum getRole() {
+        return role;
+    }
+
+    public void setRole(UserRoleEnum role) {
+        this.role = role;
+    }
 
     @Override
     public String toString() {
@@ -66,6 +76,7 @@ public class User {
         sb.append(", name='").append(name).append('\'');
         sb.append(", username='").append(username).append('\'');
         sb.append(", password='").append(password).append('\'');
+        sb.append(", role='").append(role).append('\'');
         sb.append('}');
         return sb.toString();
     }
