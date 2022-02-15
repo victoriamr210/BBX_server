@@ -9,6 +9,9 @@ import java.util.stream.Collectors;
 
 public class PriceReductionMapper {
     public static PriceReductionDTO pojo2Dto(PriceReduction priceReduction){
+        if(priceReduction == null){
+            return  null;
+        }
         return new PriceReductionDTO(priceReduction.getIdPriceReduction(), priceReduction.getReducedPrice(),
                 priceReduction.getStartDate(), priceReduction.getEndDate());
     }

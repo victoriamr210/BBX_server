@@ -9,6 +9,9 @@ import java.util.stream.Collectors;
 
 public class SupplierMapper {
     public static SupplierDTO pojo2Dto(Supplier supplier){
+        if(supplier == null){
+            return null;
+        }
         return new SupplierDTO(supplier.getIdSupplier(), supplier.getName(), supplier.getCountry());
     }
 

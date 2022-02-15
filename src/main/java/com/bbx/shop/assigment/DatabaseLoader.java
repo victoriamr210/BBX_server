@@ -47,7 +47,7 @@ public class DatabaseLoader  implements CommandLineRunner {
         supplierRepository.save(new Supplier("KIABI", "SPAIN"));
 
         priceReductionRepository.save(new PriceReduction(12D, LocalDate.parse("01/02/2022", dateTimeFormatter), LocalDate.parse("20/02/2022", dateTimeFormatter)));
-        priceReductionRepository.save(new PriceReduction(3D, LocalDate.parse("12/02/2022", dateTimeFormatter), LocalDate.parse("20/02/2022", dateTimeFormatter)));
+        priceReductionRepository.save(new PriceReduction(3D, LocalDate.parse("12/02/2022", dateTimeFormatter), LocalDate.parse("21/02/2022", dateTimeFormatter)));
 
         User user = new User("Victoria Manrique", "VMR", "$2a$04$WeHJ5LT.hm2.n.7u8lKaVeRU.jTMMmwkhag0ea0Rbd7iECrfmzNZS", UserRoleEnum.USER);
         User user1 = new User("BITBOX", "BITBOX","$2a$04$WeHJ5LT.hm2.n.7u8lKaVeRU.jTMMmwkhag0ea0Rbd7iECrfmzNZS", UserRoleEnum.ADMIN);

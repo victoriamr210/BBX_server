@@ -5,6 +5,9 @@ import com.bbx.shop.assigment.model.User;
 
 public class UserMapper {
     public static UserDTO pojo2DTO(User user){
+        if(user == null){
+            return null;
+        }
         return new UserDTO(user.getIdUser(), user.getName(), user.getUsername());
     }
 }

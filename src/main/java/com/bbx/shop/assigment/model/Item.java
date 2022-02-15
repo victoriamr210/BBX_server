@@ -35,10 +35,10 @@ public class Item {
     @Column(name = "iditem")
     private Long idItem;
 
-    @Column(name="itemcode", unique = true)
+    @Column(name="itemcode", unique = true, nullable = false)
     private String itemCode;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     private String description;
 
     @Column(name = "price")

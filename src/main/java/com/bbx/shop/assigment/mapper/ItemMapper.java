@@ -13,6 +13,10 @@ import java.util.stream.Collectors;
 
 public class ItemMapper {
     public static ItemDTO pojo2Dto(Item item){
+
+        if(item == null){
+            return null;
+        }
         List<SupplierDTO> supplierDTOList = SupplierMapper.pojo2Dto(item.getSupplierList());
         List<PriceReductionDTO> priceReductionDTOList = PriceReductionMapper.pojo2Dto(item.getPriceReductionList());
         UserDTO creator =  UserMapper.pojo2DTO(item.getCreator());
