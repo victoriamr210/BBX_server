@@ -40,7 +40,7 @@ class AssigmentApplicationTests {
 	}
 
 	@Test
-	void generateToken(){
+	void generateTokenTest(){
 		final UserDetails userDetails = myUserDetailsService.loadUserByUsername("VMR");
 		final String token = jwtTokenUtil.generateToken(userDetails);
 		assertNotNull(token);
@@ -48,12 +48,13 @@ class AssigmentApplicationTests {
 
 
 
-	@Test
-	void testQuery(){
-		Item items = itemRepository.cheapestItemBySupplier("1");
-		ItemDTO itemDTO = ItemMapper.pojo2Dto(items);
-//		List<ItemDTO> itemsDTO = ItemMapper.pojo2Dto(items);
-//		log.info(itemsDTO.toString());
-	}
+
+//	@Test
+//	void testQuery(){
+//		Item items = itemRepository.cheapestItemBySupplier("1");
+//		ItemDTO itemDTO = ItemMapper.pojo2Dto(items);
+////		List<ItemDTO> itemsDTO = ItemMapper.pojo2Dto(items);
+////		log.info(itemsDTO.toString());
+//	}
 
 }

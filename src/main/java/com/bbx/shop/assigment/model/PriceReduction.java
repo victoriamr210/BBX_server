@@ -1,17 +1,10 @@
 package com.bbx.shop.assigment.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 public class PriceReduction {

@@ -1,13 +1,17 @@
 package com.bbx.shop.assigment.auth;
 
 import com.bbx.shop.assigment.model.User;
+import com.bbx.shop.assigment.model.enums.UserRoleEnum;
 import com.bbx.shop.assigment.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,5 +25,11 @@ public class MyUserDetailsService implements UserDetailsService {
         Optional<User> user = userRepository.findByUsername(username);
         user.orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + username));
         return user.map(MyUserDetails::new).get();
+    }
+
+    public List<UserRoleEnum> getUserRoles(String username) throws UsernameNotFoundException{
+        Optional<User> user = userRepository.findByUsername(username);
+        user.orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + username));
+        return user.get().getRoles();
     }
 }

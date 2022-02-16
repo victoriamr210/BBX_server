@@ -13,7 +13,7 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
     Optional<Item> findByItemCode(String itemCode);
 
 //
-    @Query("SELECT i from Item i where i.price = (SELECT min(price) from Item)")
-    Item cheapestItemBySupplier(@Param("code") String code);
+//    @Query("SELECT i from Item i where i.price = (SELECT min(price) from Item)")
+//    Item cheapestItemBySupplier(@Param("code") String code);
 }
 

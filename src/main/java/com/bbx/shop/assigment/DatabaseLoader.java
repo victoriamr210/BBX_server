@@ -10,6 +10,7 @@ import com.bbx.shop.assigment.repository.ItemRepository;
 import com.bbx.shop.assigment.repository.PriceReductionRepository;
 import com.bbx.shop.assigment.repository.SupplierRepository;
 import com.bbx.shop.assigment.repository.UserRepository;
+import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 @Component
 public class DatabaseLoader  implements CommandLineRunner {
@@ -49,14 +51,16 @@ public class DatabaseLoader  implements CommandLineRunner {
         priceReductionRepository.save(new PriceReduction(12D, LocalDate.parse("01/02/2022", dateTimeFormatter), LocalDate.parse("20/02/2022", dateTimeFormatter)));
         priceReductionRepository.save(new PriceReduction(3D, LocalDate.parse("12/02/2022", dateTimeFormatter), LocalDate.parse("21/02/2022", dateTimeFormatter)));
 
-        User user = new User("Victoria Manrique", "VMR", "$2a$04$WeHJ5LT.hm2.n.7u8lKaVeRU.jTMMmwkhag0ea0Rbd7iECrfmzNZS", UserRoleEnum.USER);
-        User user1 = new User("BITBOX", "BITBOX","$2a$04$WeHJ5LT.hm2.n.7u8lKaVeRU.jTMMmwkhag0ea0Rbd7iECrfmzNZS", UserRoleEnum.ADMIN);
+
+        //password == pass
+        User user = new User("Victoria Manrique", "VMR", "$2a$04$WeHJ5LT.hm2.n.7u8lKaVeRU.jTMMmwkhag0ea0Rbd7iECrfmzNZS", Arrays.asList(UserRoleEnum.ROLE_USER));
+        User user1 = new User("BITBOX", "BITBOX", "$2a$04$WeHJ5LT.hm2.n.7u8lKaVeRU.jTMMmwkhag0ea0Rbd7iECrfmzNZS", Arrays.asList(UserRoleEnum.ROLE_ADMIN));
+
         userRepository.save(user1);
         item.setCreator(user);
 
         item.addSupplier(ikea);
         itemRepository.save(item);
 
-        //password == pass
     }
 }

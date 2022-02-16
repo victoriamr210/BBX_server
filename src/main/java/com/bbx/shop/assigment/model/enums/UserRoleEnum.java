@@ -1,8 +1,12 @@
 package com.bbx.shop.assigment.model.enums;
 
+import com.bbx.shop.assigment.model.User;
+
+import java.util.List;
+
 public enum UserRoleEnum {
-    ADMIN(1, "ADMIN"),
-    USER(2, "USER");
+    ROLE_ADMIN(1, "ROLE_ADMIN"),
+    ROLE_USER(2, "ROLE_USER");
 
     private Integer code;
     private String value;
@@ -28,12 +32,20 @@ public enum UserRoleEnum {
         this.value = value;
     }
 
-    public UserRoleEnum getByValue(String value){
+    public static UserRoleEnum getByValue(String value){
         for(UserRoleEnum userRoleEnum : values()){
             if(userRoleEnum.getValue().equals(value)){
                 return userRoleEnum;
             }
         }
         return null;
+    }
+
+    public static String getStringFromEnum(List<UserRoleEnum> userRoleEnums){
+        final StringBuffer sb = new StringBuffer();
+        userRoleEnums.forEach(userRoleEnum -> {
+            sb.append(userRoleEnum.getValue() + ",");
+        });
+        return sb.toString();
     }
 }
