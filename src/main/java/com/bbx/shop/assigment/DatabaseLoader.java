@@ -54,10 +54,11 @@ public class DatabaseLoader  implements CommandLineRunner {
 
         //password == pass
         User user = new User("Victoria Manrique", "VMR", "$2a$04$WeHJ5LT.hm2.n.7u8lKaVeRU.jTMMmwkhag0ea0Rbd7iECrfmzNZS", Arrays.asList(UserRoleEnum.ROLE_USER));
-        User user1 = new User("BITBOX", "BITBOX", "$2a$04$WeHJ5LT.hm2.n.7u8lKaVeRU.jTMMmwkhag0ea0Rbd7iECrfmzNZS", Arrays.asList(UserRoleEnum.ROLE_ADMIN));
+        // password == root
+        User user1 = new User("BITBOX", "BITBOX", "$2a$12$sA3ic5U0iT3mydIXI6Z5..4JiVsGGqnYOcwzZTzU5qN0fuIzYgvHe", Arrays.asList(UserRoleEnum.ROLE_ADMIN));
 
-        userRepository.save(user1);
-        item.setCreator(user);
+        userRepository.save(user);
+        item.setCreator(user1);
 
         item.addSupplier(ikea);
         itemRepository.save(item);

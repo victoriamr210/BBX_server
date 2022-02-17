@@ -15,6 +15,7 @@ import com.bbx.shop.assigment.repository.SupplierRepository;
 import com.bbx.shop.assigment.repository.UserRepository;
 import com.bbx.shop.assigment.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -144,6 +145,9 @@ public class ItemServiceImpl implements ItemService {
             throw new Exception("The Item with ID: " +idItem + " does not exist");
         }
         Item item = itemOptional.get();
+        if(item.getState() == ItemStateEnum.DISCONTINUED){
+            throw new Exception("The Item has been already Deactivated");
+        }
         String concatDescription = item.getDescription() + "\nDEACTIVATED: " +  reasonDeactivation;
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

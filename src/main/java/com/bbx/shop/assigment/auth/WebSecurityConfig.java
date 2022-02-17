@@ -24,10 +24,8 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-        // securedEnabled = true,
-        // jsr250Enabled = true,
-        prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${jwt.get.token.uri}")
@@ -84,33 +82,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-//        http
-//                .cors().and()
-//                .csrf().disable()
-//                .exceptionHandling().authenticationEntryPoint(unAuthorizedResponseAuthenticationEntryPoint).and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//                .authorizeRequests()
-////                .anyRequest().authenticated();
-//                .antMatchers("/authenticate").permitAll()
-//                .antMatchers("/api/**").permitAll();
-////
-//        http
-//                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-//
-//
-//        http
-//                .headers()
-//                .frameOptions().sameOrigin()  //H2 Console Needs this setting
-//                .cacheControl();
 
         http
                 .cors().and().csrf() .disable()
-//                .headers().frameOptions().deny()
-//                .and()
-//                .anonymous()
-//                .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/authenticate").permitAll()
+                .antMatchers(HttpMethod.POST, "/userLogout").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unAuthorizedResponseAuthenticationEntryPoint)

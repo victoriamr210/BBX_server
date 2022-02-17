@@ -34,8 +34,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return new AntPathMatcher().match("/authenticate", request.getServletPath()) &&
-                new AntPathMatcher().match("/api/**", request.getServletPath());
+        return new AntPathMatcher().match("/authenticate", request.getServletPath());
     }
 
 
@@ -43,7 +42,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         logger.info("Authentication Request For '{}'", request.getRequestURL());
 
-        final String requestTokenHeader = request.getHeader(this.tokenHeader);
+        final String requestTokenHeader = request.getHeader(tokenHeader);
+        final String usernameHeader = request.getHeader("userName");
         String username = null;
         String jwtToken = null;
 
@@ -69,8 +69,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = jwtTokenUtil.getAuthentication(jwtToken, userDetails);
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-                filterChain.doFilter(request, response);
-                return;
+//                filterChain.doFilter(request, response);
+//                return;
             }
         }
         filterChain.doFilter(request, response);

@@ -31,13 +31,25 @@ public class UserRestController {
     private UserService userService;
 
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Secured("ROLE_ADMIN")
+//    @Secured("ROLE_ADMIN")
     @GetMapping("/list")
     List<UserDTO> listUsers(){
         return userService.listUsers();
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/get/{username}")
+    ResponseEntity<UserDTO> getUser(@PathVariable String username){
+        log.info("Get user: " + username);
+        try{
+            UserDTO userDTO = userService.getUser(username);
+            return ResponseEntity.ok(userDTO);
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/addUser")
     ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO){
         log.info("Add user: " + userDTO.getName());
@@ -49,7 +61,7 @@ public class UserRestController {
         }
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/delete/{idUser}")
     ResponseEntity<HttpStatus> deleteUser(@PathVariable Long idUser){
         log.info("Delete User: " + idUser);

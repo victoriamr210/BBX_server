@@ -24,9 +24,8 @@ public class MyUserDetails implements UserDetails {
     public MyUserDetails(User user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
-        this.authorities =  Arrays.stream(UserRoleEnum.getStringFromEnum(user.getRoles()).split(","))
-                            .map(SimpleGrantedAuthority::new)
-                            .collect(Collectors.toList());
+        this.authorities =  user.getRoles().stream().map(userRoleEnum ->
+                new SimpleGrantedAuthority(userRoleEnum.getValue())).collect(Collectors.toList());
     }
 
     @Override

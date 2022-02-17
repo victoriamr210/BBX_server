@@ -30,14 +30,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUser(Long idUser) throws Exception {
-        if(idUser == null){
+    public UserDTO getUser(String username) throws Exception {
+        if(username == null){
             throw new Exception("The user ID cannot be null");
         }
 
-        Optional<User> userOptional = userRepository.findById(idUser);
+        Optional<User> userOptional = userRepository.findByUsername(username);
         if(!userOptional.isPresent()){
-            throw new Exception("The user with ID: " + idUser + "does not exist");
+            throw new Exception("The user with username : " + username + "does not exist");
         }
         return UserMapper.pojo2DTO(userOptional.get());
     }
