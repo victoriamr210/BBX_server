@@ -39,8 +39,8 @@ public class ItemRestController {
         log.info("List Items");
         return itemService.findAll();
     }
-//
-    @Secured("ROLE_ADMIN")
+
+//    @Secured("ROLE_ADMIN")
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/delete/{idItem}")
     ResponseEntity<HttpStatus> deleteItem(@PathVariable Long idItem) throws Exception {
